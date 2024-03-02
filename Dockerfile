@@ -14,5 +14,5 @@ RUN echo "Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000\n" | 
 RUN dpkg -i /tmp/mysql.deb
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C
 RUN apt update
-RUN apt-get -y install apache2 firefox mysql-server nodejs
+RUN apt-get -y install apache2 firefox mysql-server nodejs zip
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

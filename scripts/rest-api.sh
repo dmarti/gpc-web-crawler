@@ -6,6 +6,7 @@ echo "running $0 in `pwd`"
 set -e
 set -x
 
+# Start the database
 service mysql start
 service mysql status &> /dev/null
 
@@ -21,8 +22,6 @@ CREATE TABLE entries (id INTEGER PRIMARY KEY AUTO_INCREMENT, site_id INTEGER, do
 CREATE TABLE debug (id INTEGER PRIMARY KEY AUTO_INCREMENT, domain varchar(255), a varchar(4000), b varchar(4000));
 SQLCOMMANDS
 
-mysql -u root -ptoor -e 'SELECT NOW();' 
-
 # Set up REST API
 # https://github.com/privacy-tech-lab/gpc-web-crawler/wiki/How-to-run-REST-API
 cat << 'ENVFILE' > .env
@@ -35,6 +34,7 @@ ENVFILE
 
 npm install
 
+# Create a service file to run in the background
 cat << 'SERVICEFILE' > /etc/systemd/system/gpc-restapi.service
 [Unit]
 Description=REST API service
@@ -51,9 +51,9 @@ RestartSec=5
 WantedBy=multi-user.target
 SERVICEFILE
 
+# Finally start the service and exit
 systemctl enable gpc-restapi
 systemctl start gpc-restapi
-
 set +x
 echo '--------------------------------------------------'
 echo "REST API started at http://localhost:8080/analysis"
