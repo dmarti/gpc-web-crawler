@@ -23,4 +23,4 @@ EXTRALINES
 pretty-js --in-place manifest.json
 
 zip -1 -r myextension.xpi *
-mv myextension.xpi /srv/analysis/selenium-optmeowt-crawler
+cp myextension.xpi /srv/analysis/selenium-optmeowt-crawler
