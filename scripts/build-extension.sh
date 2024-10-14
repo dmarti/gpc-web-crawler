@@ -2,7 +2,9 @@
 
 set -x
 
-cd /srv/analysis/gpc-analysis-extension
+# cd /srv/analysis/gpc-analysis-extension
+
+cd gpc-analysis-extension
 
 npm install -g pretty-js
 npm install -g rimraf
@@ -23,4 +25,4 @@ EXTRALINES
 pretty-js --in-place manifest.json
 
 zip -1 -r myextension.xpi *
-cp myextension.xpi /srv/analysis/selenium-optmeowt-crawler
+cp myextension.xpi ../selenium-optmeowt-crawler

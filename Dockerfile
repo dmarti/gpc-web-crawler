@@ -2,6 +2,9 @@ FROM jrei/systemd-debian
 ENV TERM linux
 ENV DEBIAN_FRONTEND=noninteractive
 
+COPY . /build/analysis
+WORKDIR /build/analysis
+
 # Get repos and keys for Node and MySQL, then install needed packages
 RUN apt update
 RUN apt-get -y install apt-utils curl file gnupg lsb-release wget
@@ -17,4 +20,8 @@ RUN apt update
 RUN apt-get -y install apache2 firefox mysql-server nodejs zip
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN npm install -g geckodriver
+
+RUN scripts/build-extension.sh
+RUN scripts/build-crawler.sh
+
+RUN firefox --version
